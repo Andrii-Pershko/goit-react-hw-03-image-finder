@@ -1,5 +1,4 @@
 import css from './Button.module.css';
-import { RotatingLines } from 'react-loader-spinner';
 
 export const Button = ({ onChange }) => {
   return (

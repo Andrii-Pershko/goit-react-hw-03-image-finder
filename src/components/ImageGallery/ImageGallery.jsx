@@ -4,6 +4,7 @@ import axios from 'axios';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import { RotatingLines } from 'react-loader-spinner';
 import { Button } from 'components/Button/Button';
+import { Modal } from 'components/Modal/Modal';
 
 const baseUrl = 'https://pixabay.com/api/';
 const API_KEY = '33728720-baaaf621421e045403ddcb3ff';
@@ -58,14 +59,14 @@ export default class ImageGallery extends Component {
       buttonLoader: true,
     }));
   };
-  
-   toglleModal = () => {
-    this.setState(prevState => to)
-  }
+
+  toglleModal = () => {
+    this.setState(prevState => ({ modalIsOpen: !prevState.modalIsOpen }));
+    console.log('click img');
+  };
 
   render() {
-    const { status, galery, buttonLoader } = this.state;
-
+    const { status, galery, buttonLoader, modalIsOpen } = this.state;
     // якщо зашли в перший раз на сайт
     if (status === 'idle') {
       return (
@@ -107,6 +108,7 @@ export default class ImageGallery extends Component {
             <ul className={css.ImageGallery}>
               {galery.map(image => (
                 <ImageGalleryItem
+                  onChange={this.toglleModal}
                   className={css.loader}
                   key={image.id}
                   src={image.webformatURL}
@@ -114,6 +116,7 @@ export default class ImageGallery extends Component {
                 />
               ))}
             </ul>
+            {/* коли догружаєм нову погрію картинок рендерим замість кнопки loader */}
             {!buttonLoader ? (
               galery.length % 12 === 0 ? (
                 <Button onChange={this.handleAddImg}></Button>
@@ -126,6 +129,8 @@ export default class ImageGallery extends Component {
                 width="40"
               />
             )}
+            {/* рендер модалки */}
+            {modalIsOpen && <Modal />}
           </>
         );
       }
