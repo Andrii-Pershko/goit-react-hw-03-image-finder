@@ -1,4 +1,5 @@
 import css from './Button.module.css';
+import PropTypes from 'prop-types';
 
 export const Button = ({ onChange }) => {
   return (
@@ -6,4 +7,8 @@ export const Button = ({ onChange }) => {
       Load more
     </button>
   );
+};
+
+Button.propTypes = {
+  onChange: PropTypes.func,
 };

@@ -5,11 +5,11 @@ import ImageGalleryItem from 'components/ImageGalleryItem';
 import { RotatingLines } from 'react-loader-spinner';
 import { Button } from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
+import PropTypes from 'prop-types';
 
 const baseUrl = 'https://pixabay.com/api/';
 const API_KEY = '33728720-baaaf621421e045403ddcb3ff';
 
-// idle, pending, resolved, rejected;
 export default class ImageGallery extends Component {
   state = {
     galery: [],
@@ -60,18 +60,18 @@ export default class ImageGallery extends Component {
       buttonLoader: true,
     }));
   };
-
+  // відкриває/закриває модалку
   toglleModal = () => {
     this.setState(prevState => ({
       openModal: !prevState.openModal,
     }));
   };
-
+  // зберігає індекс обєкта на якого click на розміченій сторінці
   addActiveImg = index => {
     this.setState({
       activeImg: index,
     });
-
+    // відериваєм модалку по кліку
     this.toglleModal();
   };
 
@@ -98,7 +98,7 @@ export default class ImageGallery extends Component {
     }
     // малюємо галерею
     if (status === 'resolved') {
-      // якщо прийшов порожній список повідомляєм. Данний API при незнайденних даних не повертає 404, а повертає пустий масив
+      // якщо прийшов порожній список повідомляєм що нічого не знайдено. Данний API при незнайденних даних не повертає 404, а повертає пустий масив
       if (galery.length === 0) {
         return (
           <h2 style={{ textAlign: 'center' }}>
@@ -107,6 +107,7 @@ export default class ImageGallery extends Component {
         );
         // якщо в повернутому масиві є хоть 1 обєкт, малюємо нашу галерею
       } else {
+        //якщо масив не порожній робим map по масиву обєкті та рендеримо перші <= 12 елементів
         return (
           <>
             <h2 style={{ textAlign: 'center' }}>
@@ -127,7 +128,9 @@ export default class ImageGallery extends Component {
                 />
               ))}
             </ul>
-            {/* коли догружаєм нову погрію картинок рендерим замість кнопки loader */}
+
+            {/* якщо масив маж менше 12 обєктів не рендерим кнопку  */}
+            {/* коли догружаєм нову порцію картинок рендерим замість кнопки loader */}
             {!buttonLoader ? (
               galery.length % 12 === 0 ? (
                 <Button onChange={this.handleAddImg}></Button>
@@ -157,3 +160,8 @@ export default class ImageGallery extends Component {
     }
   }
 }
+
+ImageGallery.propTypes = {
+  searchByInputData: PropTypes.string,
+};
+

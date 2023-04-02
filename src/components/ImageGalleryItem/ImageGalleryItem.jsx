@@ -1,4 +1,5 @@
 import css from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
 
 export const ImageGalleryItem = ({ src, alt, onChange, index }) => {
   return (
@@ -15,3 +16,10 @@ export const ImageGalleryItem = ({ src, alt, onChange, index }) => {
 };
 
 export default ImageGalleryItem;
+
+ImageGalleryItem.propTypes = {
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  onChange: PropTypes.func,
+  index: PropTypes.number,
+};

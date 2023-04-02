@@ -16,10 +16,11 @@ export class App extends Component {
   };
 
   render() {
+    const { setSearchText, textSending } = this;
     return (
       <>
-        <Searchbar liftData={this.setSearchText} />
-        <ImageGallery searchByInputData={this.textSending()} />
+        <Searchbar liftData={setSearchText} />
+        <ImageGallery searchByInputData={textSending()} />
       </>
     );
   }

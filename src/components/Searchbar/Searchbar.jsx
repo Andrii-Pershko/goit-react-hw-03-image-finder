@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import css from './Searchbar.module.css';
+import PropTypes from 'prop-types';
 
 export default class Searchbar extends Component {
   handleSubmit = e => {
     e.preventDefault();
-    const text = e.target[1].value;
 
+    const text = e.target[1].value;
     if (text.trim() === '') {
       alert('Ваш запит не повинен бути порожній');
       return;
@@ -41,3 +42,7 @@ export default class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  liftData: PropTypes.func,
+};

@@ -1,6 +1,7 @@
 import css from './Modal.module.css';
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -10,7 +11,9 @@ export default class Modal extends Component {
   }
 
   handleKeyDon = e => {
-    if (e.code === 'Escape') this.props.toglleModal();
+    if (e.code === 'Escape') {
+      this.props.toglleModal();
+    }
   };
 
   componentWillUnmount() {
@@ -39,3 +42,8 @@ export default class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  toglleModal: PropTypes.func,
+  largeImageURL: PropTypes.object,
+};
