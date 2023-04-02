@@ -31,7 +31,6 @@ export default class ImageGallery extends Component {
         const response = await axios.get(
           `${baseUrl}?q=${text}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${this.state.itemsInPage}`
         );
-        console.log(response);
         this.setState({
           galery: [...response.data.hits],
           itemsInPage: 12,
@@ -56,7 +55,6 @@ export default class ImageGallery extends Component {
 
   // Добавляє до стейту "картинок на сторінці" +12шт
   handleAddImg = () => {
-    console.log('click');
     this.setState(prevState => ({
       itemsInPage: prevState.itemsInPage + 12,
       buttonLoader: true,
@@ -67,7 +65,6 @@ export default class ImageGallery extends Component {
     this.setState(prevState => ({
       openModal: !prevState.openModal,
     }));
-    console.log('toggle');
   };
 
   addActiveImg = index => {
