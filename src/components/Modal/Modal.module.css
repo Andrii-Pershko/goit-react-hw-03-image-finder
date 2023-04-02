@@ -13,9 +13,53 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 1200;
+
 }
 
 .Modal {
-    max-width: calc(100vw - 48px);
-    max-height: calc(100vh - 24px);
+    max-width: calc(70%);
+    max-height: calc(100%);
+
+    position: relative;
+
+}
+
+.Button {
+    top: 40px;
+    right: 40px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+
+}
+
+.Button::before {
+    display: block;
+    content: '';
+    width: 40px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: rgb(22, 12, 12);
+    transform: rotate(45deg) translate(-7px, 10px)
+}
+
+.Button::after {
+    display: block;
+    content: '';
+    width: 40px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: rgb(22, 12, 12);
+    transform: rotate(-45deg) translate(-7px, -10px)
+}
+
+.Button:hover::after {
+    background-color: rgb(144, 145, 146);
+}
+
+.Button:hover::before {
+    background-color: rgb(144, 145, 146);
 }

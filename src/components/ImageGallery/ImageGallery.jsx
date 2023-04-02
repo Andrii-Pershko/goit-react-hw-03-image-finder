@@ -4,7 +4,7 @@ import axios from 'axios';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import { RotatingLines } from 'react-loader-spinner';
 import { Button } from 'components/Button/Button';
-import { Modal } from 'components/Modal/Modal';
+import Modal from 'components/Modal/Modal';
 
 const baseUrl = 'https://pixabay.com/api/';
 const API_KEY = '33728720-baaaf621421e045403ddcb3ff';
@@ -16,7 +16,8 @@ export default class ImageGallery extends Component {
     itemsInPage: 12,
     status: 'idle',
     buttonLoader: false,
-    modalIsOpen: false,
+    openModal: false,
+    activeImg: null,
   };
 
   // перед кожним оновленням
@@ -30,6 +31,7 @@ export default class ImageGallery extends Component {
         const response = await axios.get(
           `${baseUrl}?q=${text}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${this.state.itemsInPage}`
         );
+        console.log(response);
         this.setState({
           galery: [...response.data.hits],
           itemsInPage: 12,
@@ -44,6 +46,7 @@ export default class ImageGallery extends Component {
       const response = await axios.get(
         `${baseUrl}?q=${text}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${this.state.itemsInPage}`
       );
+
       this.setState({
         galery: [...response.data.hits],
         buttonLoader: false,
@@ -61,12 +64,22 @@ export default class ImageGallery extends Component {
   };
 
   toglleModal = () => {
-    this.setState(prevState => ({ modalIsOpen: !prevState.modalIsOpen }));
-    console.log('click img');
+    this.setState(prevState => ({
+      openModal: !prevState.openModal,
+    }));
+  };
+
+  addActiveImg = index => {
+    this.setState({
+      activeImg: index,
+    });
+
+    this.toglleModal();
+    console.log('toggle');
   };
 
   render() {
-    const { status, galery, buttonLoader, modalIsOpen } = this.state;
+    const { status, galery, buttonLoader, activeImg, openModal } = this.state;
     // якщо зашли в перший раз на сайт
     if (status === 'idle') {
       return (
@@ -106,13 +119,14 @@ export default class ImageGallery extends Component {
               </span>
             </h2>
             <ul className={css.ImageGallery}>
-              {galery.map(image => (
+              {galery.map(({ id, webformatURL, title }, index) => (
                 <ImageGalleryItem
-                  onChange={this.toglleModal}
+                  onChange={() => this.addActiveImg(index)}
                   className={css.loader}
-                  key={image.id}
-                  src={image.webformatURL}
-                  alt={image.title}
+                  key={id}
+                  src={webformatURL}
+                  alt={title}
+                  index={index}
                 />
               ))}
             </ul>
@@ -130,7 +144,12 @@ export default class ImageGallery extends Component {
               />
             )}
             {/* рендер модалки */}
-            {modalIsOpen && <Modal />}
+            {openModal && (
+              <Modal
+                toglleModal={this.toglleModal}
+                largeImageURL={galery[activeImg]}
+              />
+            )}
           </>
         );
       }
