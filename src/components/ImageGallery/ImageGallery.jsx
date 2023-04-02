@@ -15,6 +15,7 @@ export default class ImageGallery extends Component {
     itemsInPage: 12,
     status: 'idle',
     buttonLoader: false,
+    modalIsOpen: false,
   };
 
   // перед кожним оновленням
@@ -57,11 +58,15 @@ export default class ImageGallery extends Component {
       buttonLoader: true,
     }));
   };
+  
+   toglleModal = () => {
+    this.setState(prevState => to)
+  }
 
   render() {
     const { status, galery, buttonLoader } = this.state;
 
-    // якщо нічого не шукали
+    // якщо зашли в перший раз на сайт
     if (status === 'idle') {
       return (
         <h2 style={{ textAlign: 'center', marginTop: 50 }}>
