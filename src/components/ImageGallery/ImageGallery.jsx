@@ -67,6 +67,7 @@ export default class ImageGallery extends Component {
     this.setState(prevState => ({
       openModal: !prevState.openModal,
     }));
+    console.log('toggle');
   };
 
   addActiveImg = index => {
@@ -75,7 +76,6 @@ export default class ImageGallery extends Component {
     });
 
     this.toglleModal();
-    console.log('toggle');
   };
 
   render() {
