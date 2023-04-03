@@ -30,7 +30,7 @@ export default class ImageGallery extends Component {
 
       try {
         const response = await axios.get(
-          `${baseUrl}?q=${text}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+          `${baseUrl}?q=${text}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
         );
         this.setState({
           galery: [...response.data.hits],
@@ -41,18 +41,19 @@ export default class ImageGallery extends Component {
       }
     }
     // перевіряємо чи користувач хоче підвантажити ще картинок
-    if (prevState.page !== page) {
-      const response = await axios.get(
-        `${baseUrl}?q=${text}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      );
-
-      this.setState(prevState => ({
-        galery: [...prevState.galery, ...response.data.hits],
-        buttonLoader: false,
-      }));
-      setTimeout(() => {
-        window.scrollBy({ top: window.innerHeight - 170, behavior: 'smooth' });
-      }, 250);
+    if (prevState.page !== page && page !== 1) {
+      console.log('i here');
+      try {
+        const response = await axios.get(
+          `${baseUrl}?q=${text}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+        );
+        this.setState(prevState => ({
+          galery: [...prevState.galery, ...response.data.hits],
+          buttonLoader: false,
+        }));
+      } catch (error) {
+        this.setState({ status: 'rejected' });
+      }
     }
   }
 
@@ -62,6 +63,9 @@ export default class ImageGallery extends Component {
       page: prevState.page + 1,
       buttonLoader: true,
     }));
+    setTimeout(() => {
+      window.scrollBy({ top: window.innerHeight - 170, behavior: 'smooth' });
+    }, 550);
   };
   // відкриває/закриває модалку
   toglleModal = () => {
