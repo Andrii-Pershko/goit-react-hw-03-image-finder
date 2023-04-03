@@ -13,7 +13,7 @@ const API_KEY = '33728720-baaaf621421e045403ddcb3ff';
 export default class ImageGallery extends Component {
   state = {
     galery: [],
-    itemsInPage: 12,
+    page: 1,
     status: 'idle',
     buttonLoader: false,
     openModal: false,
@@ -23,17 +23,18 @@ export default class ImageGallery extends Component {
   // перед кожним оновленням
   async componentDidUpdate(prevProps, prevState) {
     const text = this.props.searchByInputData;
+    const { page } = this.state;
     // перевіряємо чи змінилось слово пошуку
-    if (prevProps.searchByInputData !== this.props.searchByInputData) {
+    if (prevProps.searchByInputData !== text) {
       this.setState({ status: 'pending' });
 
       try {
         const response = await axios.get(
-          `${baseUrl}?q=${text}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${this.state.itemsInPage}`
+          `${baseUrl}?q=${text}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
         );
         this.setState({
           galery: [...response.data.hits],
-          itemsInPage: 12,
+          page: 1,
           status: 'resolved',
         });
       } catch (error) {
@@ -41,22 +42,22 @@ export default class ImageGallery extends Component {
       }
     }
     // перевіряємо чи користувач хоче підвантажити ще картинок
-    if (prevState.itemsInPage !== this.state.itemsInPage) {
+    if (prevState.page !== page) {
       const response = await axios.get(
-        `${baseUrl}?q=${text}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${this.state.itemsInPage}`
+        `${baseUrl}?q=${text}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
       );
 
-      this.setState({
-        galery: [...response.data.hits],
+      this.setState(prevState => ({
+        galery: [...prevState.galery, ...response.data.hits],
         buttonLoader: false,
-      });
+      }));
     }
   }
 
   // Добавляє до стейту "картинок на сторінці" +12шт
   handleAddImg = () => {
     this.setState(prevState => ({
-      itemsInPage: prevState.itemsInPage + 12,
+      page: prevState.page + 1,
       buttonLoader: true,
     }));
   };
@@ -164,4 +165,3 @@ export default class ImageGallery extends Component {
 ImageGallery.propTypes = {
   searchByInputData: PropTypes.string,
 };
-

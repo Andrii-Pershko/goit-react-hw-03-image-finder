@@ -3,23 +3,32 @@ import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 export default class Searchbar extends Component {
+  state = {
+    valueInput: '',
+  };
+
   handleSubmit = e => {
     e.preventDefault();
+    const { valueInput } = this.state;
 
-    const text = e.target[1].value;
-    if (text.trim() === '') {
+    if (valueInput.trim() === '') {
       alert('Ваш запит не повинен бути порожній');
       return;
     }
 
-    this.props.liftData(text);
+    this.props.liftData(valueInput);
     e.target.reset();
   };
 
+  hundleChange = e => {
+    this.setState({ valueInput: e.target.value });
+  };
+
   render() {
+    const { handleSubmit, hundleChange } = this;
     return (
       <header className={css.Searchbar}>
-        <form className={css.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={css.SearchForm} onSubmit={handleSubmit}>
           <button
             name="button"
             type="submit"
@@ -29,7 +38,8 @@ export default class Searchbar extends Component {
           </button>
 
           <input
-            onChange={this.onInput}
+            onChange={hundleChange}
+            value={this.state.valueInput}
             name="input"
             className={css['SearchForm-input']}
             type="text"

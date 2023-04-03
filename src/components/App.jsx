@@ -11,16 +11,11 @@ export class App extends Component {
     this.setState({ searchImg: data });
   };
 
-  textSending = () => {
-    return this.state.searchImg;
-  };
-
   render() {
-    const { setSearchText, textSending } = this;
     return (
       <>
-        <Searchbar liftData={setSearchText} />
-        <ImageGallery searchByInputData={textSending()} />
+        <Searchbar liftData={this.setSearchText} />
+        <ImageGallery searchByInputData={this.state.searchImg} />
       </>
     );
   }
