@@ -26,7 +26,7 @@ export default class ImageGallery extends Component {
     const { page } = this.state;
     // перевіряємо чи змінилось слово пошуку
     if (prevProps.searchByInputData !== text) {
-      this.setState({ status: 'pending' });
+      this.setState({ status: 'pending', page: 1 });
 
       try {
         const response = await axios.get(
@@ -34,7 +34,6 @@ export default class ImageGallery extends Component {
         );
         this.setState({
           galery: [...response.data.hits],
-          page: 1,
           status: 'resolved',
         });
       } catch (error) {
@@ -54,7 +53,7 @@ export default class ImageGallery extends Component {
     }
   }
 
-  // Добавляє до стейту "картинок на сторінці" +12шт
+  // Перегоптаєм на наступну сторінку та хамість кнопки ставим завантаження
   handleAddImg = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
