@@ -35,7 +35,12 @@ export default class Modal extends Component {
             type="button"
             onClick={this.props.toglleModal}
           ></button>
-          <img src={largeImageURL.largeImageURL} alt={largeImageURL.tags} />
+          <img
+            width={900}
+            height={600}
+            src={largeImageURL.largeImageURL}
+            alt={largeImageURL.tags}
+          />
         </div>
       </div>,
       modalRoot

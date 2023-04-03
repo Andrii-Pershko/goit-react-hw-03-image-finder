@@ -50,10 +50,13 @@ export default class ImageGallery extends Component {
         galery: [...prevState.galery, ...response.data.hits],
         buttonLoader: false,
       }));
+      setTimeout(() => {
+        window.scrollBy({ top: window.innerHeight - 170, behavior: 'smooth' });
+      }, 250);
     }
   }
 
-  // Перегоптаєм на наступну сторінку та хамість кнопки ставим завантаження
+  // Перегоптаєм на наступну сторінку та замість кнопки ставим завантаження
   handleAddImg = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,

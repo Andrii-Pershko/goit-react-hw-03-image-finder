@@ -17,8 +17,10 @@
 }
 
 .Modal {
-    max-width: calc(70%);
-    max-height: calc(100%);
+    min-width: 900px;
+    min-height: 600px;
+
+    max-width: 100%;
 
     position: relative;
 
