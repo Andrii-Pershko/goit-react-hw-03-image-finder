@@ -6,9 +6,17 @@ import PropTypes from 'prop-types';
 const modalRoot = document.querySelector('#modal-root');
 
 export default class Modal extends Component {
+  state = {
+    returnSkeleton: true,
+    scelet: true,
+  };
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDon);
   }
+
+  showSceleton = () => {
+    this.setState({ scelet: false });
+  };
 
   handleKeyDon = e => {
     if (e.code === 'Escape') {
@@ -18,6 +26,7 @@ export default class Modal extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDon);
+    window.removeEventListener('load', this.showSceleton);
   }
 
   overlayClick = e => {
@@ -35,7 +44,9 @@ export default class Modal extends Component {
             type="button"
             onClick={this.props.toglleModal}
           ></button>
+          {this.state.scelet && <div className="Scelet"></div>}
           <img
+            onLoad={this.showSceleton}
             width={900}
             height={600}
             src={largeImageURL.largeImageURL}

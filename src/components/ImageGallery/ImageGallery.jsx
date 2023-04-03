@@ -47,10 +47,18 @@ export default class ImageGallery extends Component {
         const response = await axios.get(
           `${baseUrl}?q=${text}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
         );
-        this.setState(prevState => ({
-          galery: [...prevState.galery, ...response.data.hits],
-          buttonLoader: false,
-        }));
+        this.setState(
+          prevState => ({
+            galery: [...prevState.galery, ...response.data.hits],
+            buttonLoader: false,
+          }),
+          () => {
+            window.scrollBy({
+              top: window.innerHeight - 170,
+              behavior: 'smooth',
+            });
+          }
+        );
       } catch (error) {
         this.setState({ status: 'rejected' });
       }
@@ -63,9 +71,6 @@ export default class ImageGallery extends Component {
       page: prevState.page + 1,
       buttonLoader: true,
     }));
-    setTimeout(() => {
-      window.scrollBy({ top: window.innerHeight - 170, behavior: 'smooth' });
-    }, 550);
   };
   // відкриває/закриває модалку
   toglleModal = () => {
