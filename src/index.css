@@ -68,22 +68,30 @@ img {
   width: 900px;
   height: 600px;
 
-  background: linear-gradient(140deg, rgb(240, 240, 240) 0%, rgb(96, 95, 95) 50%), rgb(239, 239, 239) 0%;
-  animation: gradient 2s infinite linear;
-  background-size: 400%;
+  background: linear-gradient(74deg, #949494, #e6e6e6);
+  background-size: 400% 400%;
+
+  animation: AnimationName 2s ease infinite;
 
 }
 
-@keyframes gradient {
+.css-selector {
+  background: linear-gradient(74deg, #7c7c7c, #e6e6e6);
+  background-size: 400% 400%;
+
+  animation: AnimationName 1s ease infinite;
+}
+
+@keyframes AnimationName {
   0% {
-    background-position: 0% 100%;
+    background-position: 0% 52%
   }
 
   50% {
-    background-position: 100% 0%;
+    background-position: 100% 49%
   }
 
   100% {
-    background-position: 0% 100%;
+    background-position: 0% 52%
   }
 }

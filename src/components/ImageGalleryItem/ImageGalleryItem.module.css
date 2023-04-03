@@ -15,9 +15,10 @@
     width: 100%;
     height: 260px;
     object-fit: cover;
-    background: linear-gradient(140deg, rgb(240, 240, 240) 0%, rgb(180, 180, 180) 50%), rgb(239, 239, 239) 0%;
-    animation: gradient 2s infinite linear;
-    background-size: 400%;
+    background: linear-gradient(89deg, #949494, #e6e6e6);
+    background-size: 400% 400%;
+
+    animation: AnimationName 2s ease infinite;
 }
 
 .ImageGalleryItem-image:hover {
@@ -27,16 +28,16 @@
 
 
 
-@keyframes gradient {
+@keyframes AnimationName {
     0% {
-        background-position: 0% 100%;
+        background-position: 0% 49%
     }
 
     50% {
-        background-position: 100% 0%;
+        background-position: 100% 52%
     }
 
     100% {
-        background-position: 0% 100%;
+        background-position: 0% 49%
     }
 }
