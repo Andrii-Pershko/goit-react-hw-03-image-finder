@@ -19,7 +19,6 @@ export class ImageGalleryItem extends Component {
           <img
             onLoad={this.showSceleton}
             index={index}
-            onClick={onChange}
             className={css['ImageGalleryItem-scelet']}
             src={src}
             alt={alt}
